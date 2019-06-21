@@ -28,9 +28,9 @@
 <form class="container">
 <nav class="navbar navbar-dark bg-dark">
 <a href="importsubject.php">อัพโหลดรายวิชา</a>
-<a href="#">Services</a>
-<a href="#">Clients</a>
-<a href="#">Contact</a>
+<a href="importroom.php">อัพโหลดห้องสอบ</a>
+<a href="tableteacher.php?data=">รายชื่อบุคลากร</a>
+<a href="export.php">ดูรายงาน</a>
 <a href="index.php?logout='1'" style="color: red;">ออกจากระบบ</a>
 </nav>
 <div align="center"><br/>
