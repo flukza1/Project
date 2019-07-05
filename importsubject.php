@@ -21,7 +21,9 @@ if(isset($_POST["submit"]))
   $filename = explode(".", $_FILES['file']['name']);
   if($filename[1] == 'csv')
   {
+    if($yearst != "" && $term != ""){
    $handle = fopen($_FILES['file']['tmp_name'], "r");
+   $rowcount = 0;
    while($data = fgetcsv($handle))
    {
         $value1 = trim($data[2]);
@@ -30,33 +32,24 @@ if(isset($_POST["submit"]))
         $value4 = trim($data[4]);
         $value5 = trim($data[6]);
         $value6 = trim($data[0]);
-      if($yearst != "" && $term != ""){
-        if($value1!="รหัสวิชา" || $value2 !="ชื่อวิชา" || $value3 !="เวลาสอบ" || $value4 !="sec" || $value5 !="ชื่ออาจารย์ผู้ออกข้อสอบ")
+        if($value1!="รหัสวิชา" || $value2 !="ชื่อวิชา" || $value3 !="เวลาสอบ" || $value4 !="sec" || $value5 !="ชื่ออาจารย์ผู้ออกข้อสอบ" && $value6 !="วัน เดือน ปี")
         {
-            if($value1 !="" || $value2 !="" || $value3 !="" || $value4 !="" || $value5 !="")
+            if($value1 !="" || $value2 !="" || $value3 !="" || $value4 !="" || $value5 !="" || $value6 !="")
             {
-            $query = "INSERT into subject(subject_id, subject_name, time, term, year, sec_id, teacher_name) VALUES('$value1','$value2','$value3','$term','$yearst','$value4','$value5')";
-            // $query2 = "INSERT into section(sec_id, date, time) VALUES('$value4','$value6','$value3')";
-            // $clear = "ALTER TABLE subject AUTO_INCREMENT = 1";
-            // mysqli_query($connect, $clear);
+            $query = "INSERT into subject(subject_id, subject_name, date, time, term, year, sec_id, teacher_name) VALUES('$value1','$value2','$value6','$value3','$term','$yearst','$value4','$value5')";
+            $query2 = "INSERT into section(sec_id, date, time) VALUES('$value4','$value6','$value3')";
             mysqli_query($db, $query);
-            // mysqli_query($db, $query2);
+            mysqli_query($db, $query2);
+            $rowcount++;
             }
         }
-      }
-        // if($value4!="sec" || $value6 !="วัน เดือน ปี" || $value3 !="เวลาสอบ")
-        // {
-        //     if($value4 !="" || $value6 !="" || $value3 !="")
-        //     {
-        //     $query2 = "INSERT into section(sec_id, date, time) VALUES('$value4','$value6','$value3')";
-        //     mysqli_query($db, $query2);
-        //     }
-        // }
-
-     
    }
    fclose($handle);
-   echo "<script>alert('อัพโหลดสำเร็จ');</script>";
+   echo "<script>alert('อัพโหลดสำเร็จ คุณได้อัพโหลดข้อมูลไป $rowcount Records');</script>";
+  }
+   else{
+    echo "<script>alert('กรุณาเลือกปีการศึกษาหรือเทอมก่อน');</script>";
+    }
   }
   else{
     echo "<script>alert('กรุณาเลือกไฟล์ CSV เท่านั้น');</script>";

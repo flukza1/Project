@@ -29,7 +29,7 @@
 <nav class="navbar navbar-dark bg-dark">
 <a href="importsubject.php">อัพโหลดรายวิชา</a>
 <a href="importroom.php">อัพโหลดห้องสอบ</a>
-<a href="tableteacher.php?data=">รายชื่อบุคลากร</a>
+<a href="tableteacher.php?data=&teacher_type=">รายชื่อบุคลากร</a>
 <a href="export.php">ดูรายงาน</a>
 <a href="index.php?logout='1'" style="color: red;">ออกจากระบบ</a>
 </nav>

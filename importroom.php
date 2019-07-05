@@ -19,6 +19,7 @@ if(isset($_POST["submit"]))
   $filename = explode(".", $_FILES['file']['name']);
   if($filename[1] == 'csv')
   {
+   $rowcount = 0;
    $handle = fopen($_FILES['file']['tmp_name'], "r");
    while($data = fgetcsv($handle))
    {
@@ -26,17 +27,19 @@ if(isset($_POST["submit"]))
         $value2 = trim($data[7]);
         $value3 = trim($data[8]);
         $value4 = trim($data[2]);
-        if($value1!="อาคาร" || $value2 !="ห้องสอบ" || $value3 !="จำนวน นศ." || $value4 !="รหัสวิชา")
+        $value5 = trim($data[4]);
+        if($value1!="อาคาร" || $value2 !="ห้องสอบ" || $value3 !="จำนวน นศ." || $value4 !="รหัสวิชา" || $value5 !="กลุ่ม")
         {
-            if($value1 !="" || $value2 !="" || $value3 !="" || $value4 !="")
+            if($value1 !="" || $value2 !="" || $value3 !="" || $value4 !="" || $value5 !="")
             {
-            $query = "INSERT into room(building, room, student, subject_id) VALUES('$value1','$value2','$value3','$value4')";
+            $query = "INSERT into room(building, room, student, subject_id, sec_id) VALUES('$value1','$value2','$value3','$value4','$value5')";
             mysqli_query($db, $query);
+            $rowcount++;
             }
         }
    }
    fclose($handle);
-   echo "<script>alert('อัพโหลดสำเร็จ');</script>";
+   echo "<script>alert('อัพโหลดสำเร็จ คุณได้อัพโหลดข้อมูลไป $rowcount Records');</script>";
   }
   else{
     echo "<script>alert('กรุณาเลือกไฟล์ CSV เท่านั้น');</script>";
